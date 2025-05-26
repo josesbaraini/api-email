@@ -1,27 +1,26 @@
-import  express  from "express";
+import express, { Express, Request, Response } from 'express';
+import dotenv from "dotenv";
+import nodemailer, { Transporter, SentMessageInfo } from "nodemailer";
+dotenv.config();
+const app : Express = express();
 
-const app = express();
-
-import nodemailer from "nodemailer";
-
-let transporter = nodemailer.createTransport({
+let transporter : Transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         type: 'OAuth2',
         clientId: process.env.CLIENTID,
         clientSecret: process.env.CLIENTSECRET,
         refreshToken: process.env.REFRESHTOKEN,
-        user: 'mandaemeil222@gmail.com',
-        pass: '25252525Bb'
+        user: 'mandaemeil222@gmail.com'
     }
 });
 
 
 
-app.get('/enviarEmail', (req , res)=>{
-    const destino = req.query.destino;
-    let conteudo = req.query.conteudo;
-    let mailOptions = {
+app.get('/enviarEmail', (req : Request , res: Response)=>{
+    const destino : string = req.query.destino;
+    const conteudo : string = req.query.conteudo;
+    const mailOptions = {
         from: 'mandaemeil222@gmail.com',
         to: destino,
         subject: 'Assunto do Email',
@@ -29,7 +28,7 @@ app.get('/enviarEmail', (req , res)=>{
         html: '<b>Corpo do email em HTML</b>'
     };
  
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo | null) => {
         if (error) {
             console.log(error)
             return res.send(error);
