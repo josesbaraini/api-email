@@ -2,11 +2,14 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^4.21.1",
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "nodemon": "^3.1.10"
   },
   "type": "module",
   "devDependencies": {
+    "@types/express": "^5.0.2",
     "@types/node": "^22.15.21",
+    "@types/nodemailer": "^6.4.17",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
@@ -15,7 +18,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts",
+    "dev": "nodemon --exec ts-node --esm index.ts",
     "build": "tsc"
   },
   "author": "",
